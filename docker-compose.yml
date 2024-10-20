@@ -1,0 +1,6 @@
+version: '3.8'  # 选择合适的版本
+
+services:
+  wencai:
+    image: wencai
+    restart: always  # 设置自动重启策略
