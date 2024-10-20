@@ -84,7 +84,7 @@ logging.basicConfig(
 # 示例日志输出
 logging.info("程序启动")
 
-getWenCaiAndSendEmail()
+# getWenCaiAndSendEmail()
 
 
 # 安排每周一到周五的晚上 6 点 18 分执行 log_message 函数
