@@ -4,3 +4,5 @@ services:
   wencai:
     image: wencai
     restart: always  # 设置自动重启策略
+    volumes:
+      - /root/wencai:/usr/src/app  # 宿主机路径映射到容器路径
