@@ -48,7 +48,7 @@ def send_email(subject, body, to_email, attachment_path):
     except Exception as e:
         logging.info(f"发送邮件时出现错误: {e}")
     finally:
-        if 'server' in locals():  # 检查server是否已成功创建
+        if "server" in locals():  # 检查server是否已成功创建
             server.quit()  # 关闭服务器连接
 
 
@@ -59,9 +59,9 @@ def getWenCaiAndSendEmail():
     )
 
     # 获取当前时间，并生成文件名
-    current_datetime = datetime.datetime.now(pytz.timezone('Asia/Shanghai'))
+    current_datetime = datetime.datetime.now(pytz.timezone("Asia/Shanghai"))
     filename = current_datetime.strftime("%Y-%m-%d_%H-%M-%S") + ".xlsx"
-    
+
     if res is None or len(res) == 0:
         logging.info(f"没有任何数据 {current_datetime.strftime('%Y-%m-%d')}")
         return
@@ -84,13 +84,15 @@ def schedule_job():
     local_tz = pytz.timezone("Asia/Shanghai")
     now = datetime.datetime.now(local_tz)
     # logging.info(f"当前时间: {now.strftime('%Y-%m-%d %H:%M')}")  # 输出当前时间
-    
+
     # 检查是否是周一到周五的18:18
-    if now.weekday() <= 5 and now.hour == 18 and now.minute == 18:
+    if now.weekday() <= 5 and now.hour == 21 and now.minute == 59:
         getWenCaiAndSendEmail()
 
 
+# 设置每分钟检查一次
+schedule.every().minute.do(schedule_job)
 # 每分钟检查一次
 while True:
-    schedule_job()
-    time.sleep(31)  # 每60秒检查一次
+    schedule.run_pending()
+    time.sleep(1)  # 每60秒检查一次
