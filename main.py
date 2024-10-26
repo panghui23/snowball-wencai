@@ -81,18 +81,28 @@ logging.info("程序启动")
 
 # 安排每周一到周五的晚上 6 点 18 分执行 getWenCaiAndSendEmail 函数
 def schedule_job():
-    local_tz = pytz.timezone("Asia/Shanghai")
-    now = datetime.datetime.now(local_tz)
+    # local_tz = pytz.timezone("Asia/Shanghai")
+    # now = datetime.datetime.now(local_tz)
     # logging.info(f"当前时间: {now.strftime('%Y-%m-%d %H:%M')}")  # 输出当前时间
 
-    # 检查是否是周一到周五的18:18
-    if now.weekday() <= 5 and now.hour == 21 and now.minute == 59:
-        getWenCaiAndSendEmail()
+    # # 检查是否是周一到周五的18:18
+    # if now.weekday() <= 5 and now.hour == 18 and now.minute == 18:
+    getWenCaiAndSendEmail()
 
+
+# 定义定时任务的时间
+schedule.every().monday.at("18:18").do(schedule_job)
+schedule.every().tuesday.at("18:18").do(schedule_job)
+schedule.every().wednesday.at("18:18").do(schedule_job)
+schedule.every().thursday.at("18:18").do(schedule_job)
+schedule.every().friday.at("18:18").do(schedule_job)
+# schedule.every().saturday.at("17:21").do(schedule_job)
 
 # 设置每分钟检查一次
-schedule.every().minute.do(schedule_job)
+# schedule.every().minute.do(schedule_job)
 # 每分钟检查一次
-while True:
-    schedule.run_pending()
-    time.sleep(1)  # 每60秒检查一次
+# 保持运行状态
+if __name__ == "__main__":
+    while True:
+        schedule.run_pending()
+        time.sleep(1)

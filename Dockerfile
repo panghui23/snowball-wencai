@@ -4,6 +4,8 @@ FROM python:3.11-slim
 # 设置工作目录
 WORKDIR /usr/src/app
 
+# 设置时区
+ENV TZ=Asia/Shanghai
 # 安装 Node.js 16+
 # 1. 安装 curl
 # 2. 使用 NodeSource 安装 Node.js
