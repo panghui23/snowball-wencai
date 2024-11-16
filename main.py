@@ -130,7 +130,7 @@ if __name__ == "__main__":
     print(f"接收邮箱: {config.receive_email}")
     print(f"问财查询条件: {config.wencai_query}")
     print(f"execution_time: {time_str}")
-    schedule_job()
+    # schedule_job()
     while True:
         schedule.run_pending()
         time.sleep(10)

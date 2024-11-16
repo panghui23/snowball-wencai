@@ -5,3 +5,6 @@ docker:
 
 save:
 	docker save -o wencai.tar wencai:latest
+#生成requirment
+requirements:
+	pipreqs ./
