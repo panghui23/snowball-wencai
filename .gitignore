@@ -5,3 +5,4 @@ data/
 # conf/config.yaml
 conf/config copy.yaml
 conf/config.yaml
+__pycache__/

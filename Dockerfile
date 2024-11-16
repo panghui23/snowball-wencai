@@ -23,9 +23,11 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # 复制应用程序代码
 COPY main.py ./
+COPY config.py ./
+COPY conf ./
 
 # 设置环境变量（可选）
 # ENV PYTHONUNBUFFERED=1
 
 # 指定容器启动时执行的命令
-CMD ["python", "./main.py"]
+CMD ["python", "main.py"]
