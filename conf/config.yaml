@@ -1,0 +1,8 @@
+email_config:
+  email: snowball@126.com #发送的邮箱
+  password: NKsbA3eghYqHUC #邮箱POP3、SMTP、IMAP密码，开通邮箱的POP3、SMTP、IMAP
+receive_email:
+  - PGH@qq.com #接收的邮箱
+wencai_query:  #在问财需要查询语句
+  - 人均持股市值>5万元；股东人数降序排序；近10日区间换手率<5%；流通市值大于100亿；股价在10日均线上方；持股人数小于15万；总市值大于20亿；股价小于100元
+execution_time: "15:18" #周一到周五执行的时间
