@@ -2,3 +2,4 @@ venv/
 wencai.tar
 data/
 conf/config copy.yaml
+conf/config.yaml
