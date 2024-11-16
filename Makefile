@@ -7,7 +7,7 @@ save:
 	docker save -o wencai.tar wencai:latest
 #生成requirment
 requirement:
-	pipreqs --force ./
+	pip freeze > requirements.txt
 venv:
 	python -m venv venv
 exit:

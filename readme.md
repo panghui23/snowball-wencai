@@ -1,10 +1,4 @@
-python -m venv venv
-source venv/bin/activate  # 在 Linux 和 macOS
-
-
-#docker保存
-
-docker save -o wencai.tar wencai:latest
-
-#docker解压
-docker load -i wencai.tar
+普通启动
+1.配置conf/config.yaml文件
+2.安装pip install -r requirements.txt
+3.python main.py
