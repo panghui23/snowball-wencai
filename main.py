@@ -68,7 +68,7 @@ def getWenCaiAndSendEmail(wencaiQuery):
     filename = "./data/" + current_datetime.strftime("%Y-%m-%d_%H-%M-%S") + ".xlsx"
     countMap = getCount()
     if res is None or len(res) == 0:
-        logging.info(f"没有任何数据 {current_datetime.strftime('%Y-%m-%d')}")
+        logging.info(f"没有任何问财股票 {current_datetime.strftime('%Y-%m-%d')}")
         return
     else:
         res.to_excel(filename)
@@ -130,7 +130,7 @@ if __name__ == "__main__":
     print(f"接收邮箱: {config.receive_email}")
     print(f"问财查询条件: {config.wencai_query}")
     print(f"execution_time: {time_str}")
-
+    schedule_job()
     while True:
         schedule.run_pending()
         time.sleep(10)
