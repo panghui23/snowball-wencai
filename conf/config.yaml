@@ -1,0 +1,8 @@
+email_config:
+  email: snowball1688@126.com
+  password: NKSLFbA3eghYqHUC
+receive_email:
+  - panghui23@qq.com
+wencai_query: 
+  - 人均持股市值>50万元；股东人数降序排序；近10日区间换手率<15%；流通市值大于100亿；股价在10日均线上方；持股人数小于15万；股价创近一年新高；总市值大于200亿；股价小于100元
+execution_time: "15:18"

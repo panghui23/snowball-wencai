@@ -11,12 +11,13 @@ import logging
 import pytz  # 导入pytz库
 import os
 import pandas as pd
+from config import config
 
 
 # 用于发送邮件的函数
 def send_email(subject, body, to_email, attachment_path):
-    from_email = "snowball1688@126.com"  # 发送者邮箱
-    password = "NKSLFbA3eghYqHUC"  # 发送者邮箱密码
+    from_email = config.email_config.email
+    password = config.email_config.password  # 发送者邮箱密码
 
     # 创建一个多部分邮件
     msg = MIMEMultipart()
@@ -55,10 +56,9 @@ def send_email(subject, body, to_email, attachment_path):
 
 
 # 获取数据并发送邮件的函数
-def getWenCaiAndSendEmail():
-    res = pywencai.get(
-        query="人均持股市值>50万元；股东人数降序排序；近10日区间换手率<15%；流通市值大于100亿；股价在10日均线上方；持股人数小于15万；股价创近一年新高；总市值大于200亿；股价小于100元"
-    )
+def getWenCaiAndSendEmail(wencaiQuery):
+    logging.info(f"读取问财结果{wencaiQuery}")
+    res = pywencai.get(query=wencaiQuery)
 
     # 检查并创建 'data' 文件夹（如果不存在的话）
     if not os.path.exists("data"):
@@ -79,25 +79,14 @@ def getWenCaiAndSendEmail():
 
         # 将股票简称连接成字符串
         logging.info(f"发送邮件：{msg}")
-        send_email("神股来了", msg, "panghui23@qq.com", f"./{filename}")
+        for email in config.receive_email:
+            send_email("神股来了", msg, email, f"./{filename}")
 
 
-# 配置日志格式和级别
-logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
-)
-logging.info("程序启动")
-
-
-# 安排每周一到周五的晚上 6 点 18 分执行 getWenCaiAndSendEmail 函数
 def schedule_job():
-    # local_tz = pytz.timezone("Asia/Shanghai")
-    # now = datetime.datetime.now(local_tz)
-    # logging.info(f"当前时间: {now.strftime('%Y-%m-%d %H:%M')}")  # 输出当前时间
-
-    # # 检查是否是周一到周五的18:18
-    # if now.weekday() <= 5 and now.hour == 18 and now.minute == 18:
-    getWenCaiAndSendEmail()
+    # 读取配置表问财查询条件
+    for wencaiQuery in config.wencai_query:
+        getWenCaiAndSendEmail(wencaiQuery)
 
 
 def getCount():
@@ -120,20 +109,28 @@ def getCount():
     return combined_df["股票简称"].value_counts()
 
 
-# 定义定时任务的时间
-schedule.every().monday.at("15:18").do(schedule_job)
-schedule.every().tuesday.at("15:18").do(schedule_job)
-schedule.every().wednesday.at("15:18").do(schedule_job)
-schedule.every().thursday.at("15:18").do(schedule_job)
-schedule.every().friday.at("15:18").do(schedule_job)
-# schedule.every().saturday.at("17:21").do(schedule_job)
-
-# 设置每分钟检查一次
-# schedule.every().minute.do(schedule_job)
-# 每分钟检查一次
-# 保持运行状态
 # getWenCaiAndSendEmail()
 if __name__ == "__main__":
+    # 配置日志格式和级别
+    logging.basicConfig(
+        level=logging.INFO, format="%(asctime)s - %(levelname)s - %(message)s"
+    )
+    logging.info("程序启动")
+    # 从配置文件中获取时间
+    execution_time: time = config.execution_time
+    # 格式化为字符串格式 "HH:MM"
+    time_str = execution_time.strftime("%H:%M")
+    # 定义定时任务的时间
+    schedule.every().monday.at(time_str).do(schedule_job)
+    schedule.every().tuesday.at(time_str).do(schedule_job)
+    schedule.every().wednesday.at(time_str).do(schedule_job)
+    schedule.every().thursday.at(time_str).do(schedule_job)
+    schedule.every().friday.at(time_str).do(schedule_job)
+    print(f"主邮箱: {config.email_config.email}")
+    print(f"接收邮箱: {config.receive_email}")
+    print(f"问财查询条件: {config.wencai_query}")
+    print(f"execution_time: {time_str}")
+
     while True:
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(10)
