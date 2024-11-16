@@ -1,5 +1,6 @@
 venv/
 wencai.tar
 data/
-conf/config copy.yaml
+conf/
 conf/config.yaml
+__pycache__/

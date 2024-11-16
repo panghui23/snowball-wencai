@@ -6,5 +6,15 @@ docker:
 save:
 	docker save -o wencai.tar wencai:latest
 #生成requirment
-requirements:
-	pipreqs ./
+requirement:
+	pipreqs --force ./
+venv:
+	python -m venv venv
+exit:
+	deactivate
+install:
+	pip install -r requirements.txt
+source:
+	source ./venv/bin/activate
+run:
+	python main.py
