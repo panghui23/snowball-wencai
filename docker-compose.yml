@@ -3,6 +3,8 @@ version: '3.8'  # 选择合适的版本
 services:
   wencai:
     image: wencai
+    container_name: wencai
     restart: always  # 设置自动重启策略
     volumes:
-      - /root/wencai:/usr/src/app  # 宿主机路径映射到容器路径
+      - /root/wencai/:/usr/src/app/  # 宿主机路径映射到容器路径
+      # - /root/wencai/conf:/usr/src/app/conf  # 宿主机路径映射到容器路径

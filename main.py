@@ -103,13 +103,15 @@ def getCount():
         dataframes.append(df)
 
     # 如果需要，你可以将所有 DataFrame 合并为一个 DataFrame
-    combined_df = pd.concat(dataframes, ignore_index=True)
+    if len(csv_files)>0:
+        combined_df = pd.concat(dataframes, ignore_index=True)
 
     print(combined_df["股票简称"].value_counts())
     return combined_df["股票简称"].value_counts()
 
 
-# getWenCaiAndSendEmail()
+#getWenCaiAndSendEmail()
+
 if __name__ == "__main__":
     # 配置日志格式和级别
     logging.basicConfig(

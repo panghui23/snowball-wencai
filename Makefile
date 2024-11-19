@@ -2,6 +2,7 @@
 # --platform linux/arm/v8 
 docker:
 	docker build --platform linux/amd64 -t wencai . 
+	docker save -o wencai.tar wencai:latest
 
 save:
 	docker save -o wencai.tar wencai:latest
